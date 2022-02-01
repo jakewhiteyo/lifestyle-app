@@ -86,11 +86,22 @@
             android:text="" />
 
         <Button
+            android:id="@+id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/height"
+            android:layout_marginTop="0dp"
+            android:text="submit" />
+
+        <Button
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/height"
+            android:layout_toRightOf="@id/submit_button"
             android:text="cancel" />
+
+
 
     </RelativeLayout>
 
