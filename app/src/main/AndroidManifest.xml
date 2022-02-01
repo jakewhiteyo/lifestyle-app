@@ -10,11 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lifestyleapp">
         <activity
-            android:name=".ProfileActivity"
-            android:exported="false"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/Theme.Lifestyleapp.NoActionBar" />
-        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
