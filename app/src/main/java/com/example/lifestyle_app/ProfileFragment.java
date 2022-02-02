@@ -1,7 +1,11 @@
 package com.example.lifestyle_app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,20 +13,25 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.lifestyle_app.databinding.ActivityMainBinding;
 import com.example.lifestyle_app.databinding.ProfileFragmentBinding;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ProfileFragment extends Fragment {
 
@@ -31,6 +40,12 @@ public class ProfileFragment extends Fragment {
     private String first_name;
 
     private Button submit_button;
+
+    private static final int CAPTURE_IMAGE_REQUEST_CODE = 1888;
+
+    Bitmap thumbnailImage;
+
+
     private EditText first_name_text;
 
     public ProfileFragment() {
@@ -87,6 +102,66 @@ public class ProfileFragment extends Fragment {
                         .navigate(R.id.action_ProfileFragment_to_FirstFragment);
             }
         });
+
+        binding.takePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAPTURE_IMAGE_REQUEST_CODE);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == CAPTURE_IMAGE_REQUEST_CODE){
+            if (resultCode == Activity.RESULT_OK){
+                Bitmap bmp = (Bitmap) data.getExtras().get("data");
+                thumbnailImage = bmp;
+
+                //Open file and write to it
+                if(isExternalStorageWritable()){
+                    String filePathStr = saveImage(thumbnailImage);
+
+                }
+
+                else{
+                    Toast.makeText(getActivity(), "External storage not writable.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    private String saveImage(Bitmap finalBitmap){
+        String root = Environment.getExternalStorageDirectory().toString();
+        File dir = new File(root + "/saved_images");
+        dir.mkdirs();
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String fileName = "Thumbnail_"+ timeStamp + ".jpg";
+
+        File file = new File(dir, fileName);
+        if(file.exists()) file.delete();
+        try{
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+            Toast.makeText(getActivity(), "File saved!", Toast.LENGTH_SHORT).show();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return file.getAbsolutePath();
+    }
+
+    private boolean isExternalStorageWritable(){
+        String state = Environment.getExternalStorageState();
+        if(Environment.MEDIA_MOUNTED.equals(state)){
+            return true;
+        }
+
+        return false;
     }
 
     private void saveFile(String first_name) {
