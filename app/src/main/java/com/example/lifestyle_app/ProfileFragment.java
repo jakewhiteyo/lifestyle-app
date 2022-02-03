@@ -45,6 +45,9 @@ public class ProfileFragment extends Fragment {
 
     Bitmap thumbnailImage;
 
+    // The ImageView that holds the profile pic
+    ImageView mIvPic;
+
 
     private EditText first_name_text;
 
@@ -68,6 +71,7 @@ public class ProfileFragment extends Fragment {
         return binding.getRoot();
 
     }
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -84,10 +88,9 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 first_name = first_name_text.getText().toString();
-                if(first_name.matches("")) {
+                if (first_name.matches("")) {
                     Toast.makeText(getActivity(), "Enter a name first!", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     saveFile(first_name);
                     NavHostFragment.findNavController(ProfileFragment.this)
                             .navigate(R.id.action_ProfileFragment_to_FirstFragment);
@@ -113,51 +116,53 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode == CAPTURE_IMAGE_REQUEST_CODE){
-            if (resultCode == Activity.RESULT_OK){
-                Bitmap bmp = (Bitmap) data.getExtras().get("data");
-                thumbnailImage = bmp;
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAPTURE_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // Gets the thumbnail of the image
+            Bitmap bmp = (Bitmap) data.getExtras().get("data");
+            thumbnailImage = bmp;
 
-                //Open file and write to it
-                if(isExternalStorageWritable()){
-                    String filePathStr = saveImage(thumbnailImage);
+            // Puts the thumbnail on the ImageView
+            mIvPic = (ImageView) getView().findViewById(R.id.iv_pic);
+            mIvPic.setImageBitmap(thumbnailImage);
 
-                }
+            //Open file and write to it
+            if (isExternalStorageWritable()) {
+                String filePathStr = saveImage(thumbnailImage);
 
-                else{
-                    Toast.makeText(getActivity(), "External storage not writable.", Toast.LENGTH_SHORT).show();
-                }
+            } else {
+                Toast.makeText(getActivity(), "External storage not writable.", Toast.LENGTH_SHORT).show();
             }
+
         }
     }
 
-    private String saveImage(Bitmap finalBitmap){
+    private String saveImage(Bitmap finalBitmap) {
         String root = Environment.getExternalStorageDirectory().toString();
         File dir = new File(root + "/saved_images");
         dir.mkdirs();
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String fileName = "Thumbnail_"+ timeStamp + ".jpg";
+        String fileName = "Thumbnail_" + timeStamp + ".jpg";
 
         File file = new File(dir, fileName);
-        if(file.exists()) file.delete();
-        try{
+        if (file.exists()) file.delete();
+        try {
             FileOutputStream out = new FileOutputStream(file);
             finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
             out.flush();
             out.close();
             Toast.makeText(getActivity(), "File saved!", Toast.LENGTH_SHORT).show();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return file.getAbsolutePath();
     }
 
-    private boolean isExternalStorageWritable(){
+    private boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
-        if(Environment.MEDIA_MOUNTED.equals(state)){
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
             return true;
         }
 
@@ -168,7 +173,7 @@ public class ProfileFragment extends Fragment {
         File directory = getActivity().getFilesDir();
         try {
             File file = new File(directory, "Profile");
-                //Toast.makeText(getActivity(), "doesn't exist", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "doesn't exist", Toast.LENGTH_SHORT).show();
             FileOutputStream writer = new FileOutputStream(file);
             writer.write(first_name.getBytes());
             writer.close();
