@@ -139,20 +139,20 @@ public class ProfileFragment extends Fragment {
 
     private String saveImage(Bitmap finalBitmap) {
         String root = Environment.getExternalStorageDirectory().toString();
-        File dir = new File(root + "/saved_images");
+        File dir = getActivity().getFilesDir();
         dir.mkdirs();
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String fileName = "Thumbnail_" + timeStamp + ".jpg";
+        // String fileName = "Thumbnail_" + timeStamp + ".jpg";
 
-        File file = new File(dir, fileName);
+        File file = new File(dir, "ProfileImage.png");
         if (file.exists()) file.delete();
         try {
             FileOutputStream out = new FileOutputStream(file);
             finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
             out.flush();
             out.close();
-            Toast.makeText(getActivity(), "File saved!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Picture saved!", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -172,7 +172,7 @@ public class ProfileFragment extends Fragment {
     private void saveFile(String first_name) {
         File directory = getActivity().getFilesDir();
         try {
-            File file = new File(directory, "Profile");
+            File file = new File(directory, "ProfileName");
             //Toast.makeText(getActivity(), "doesn't exist", Toast.LENGTH_SHORT).show();
             FileOutputStream writer = new FileOutputStream(file);
             writer.write(first_name.getBytes());

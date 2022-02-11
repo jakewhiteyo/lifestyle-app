@@ -1,9 +1,12 @@
 package com.example.lifestyle_app;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +26,7 @@ public class FirstFragment extends Fragment {
     private FragmentFirstBinding binding;
 
     private TextView profileText;
+    private ImageView imageView;
 
     @Override
     public View onCreateView(
@@ -40,12 +44,12 @@ public class FirstFragment extends Fragment {
 
         profileText = (TextView) view.findViewById(R.id.profile_text);
 
-        File file = new File(getActivity().getFilesDir(), "Profile");
-
+        //fetch first name data
+        File nameFile = new File(getActivity().getFilesDir(), "ProfileName");
         String name = "first name: ";
-        if(file.exists()) {
+        if(nameFile.exists()) {
             try {
-                Scanner scanner = new Scanner(file);
+                Scanner scanner = new Scanner(nameFile);
                 while(scanner.hasNextLine()) {
                     name += scanner.nextLine();
                 }
@@ -56,7 +60,19 @@ public class FirstFragment extends Fragment {
 
             profileText.setText(name);
             //first_name_text.setText(first_name);
+        }
 
+        //fetch thumbnail image
+        imageView = (ImageView) view.findViewById(R.id.image_view);
+        File imageFile = new File(getActivity().getFilesDir(), "ProfileImage.png");
+
+        if(imageFile.exists()) {
+            try {
+                imageView.setImageDrawable(Drawable.createFromPath(imageFile.toString()));
+
+            } catch (Exception e) {
+
+            }
         }
 
         binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
