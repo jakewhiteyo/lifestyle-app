@@ -17,9 +17,12 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.lifestyle_app.databinding.ActivityMainBinding;
@@ -31,7 +34,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
@@ -44,6 +49,8 @@ public class ProfileFragment extends Fragment {
     private static final int CAPTURE_IMAGE_REQUEST_CODE = 1888;
 
     Bitmap thumbnailImage;
+
+    String[] sexes = {"Male", "Female", "Other"};
 
     // The ImageView that holds the profile pic
     ImageView mIvPic;
@@ -76,8 +83,18 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         first_name_text = (EditText) view.findViewById(R.id.first_name);
+
+        //set up sex spinner
+        List<String> sexes = new ArrayList<>();
+        sexes.add(0, "Select a sex");
+        sexes.add("Male");
+        sexes.add("Female");
+        sexes.add("Other");
+        Spinner sexSelector = (Spinner) getView().findViewById(R.id.gender_select);
+        ArrayAdapter<String> adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, sexes);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sexSelector.setAdapter(adapter);
 
 //        if(!(first_name.matches(""))) {
 //            first_name_text.setText(first_name);
@@ -95,6 +112,19 @@ public class ProfileFragment extends Fragment {
                     NavHostFragment.findNavController(ProfileFragment.this)
                             .navigate(R.id.action_ProfileFragment_to_FirstFragment);
                 }
+            }
+        });
+
+        binding.genderSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                Object gender = adapterView.getItemAtPosition(pos);
+                Toast.makeText(getActivity(), gender.toString() + " was selected!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 
