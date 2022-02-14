@@ -110,7 +110,7 @@ public class ProfileFragment extends Fragment {
                 } else {
                     saveFile(first_name);
                     NavHostFragment.findNavController(ProfileFragment.this)
-                            .navigate(R.id.action_ProfileFragment_to_FirstFragment);
+                            .navigate(R.id.action_ProfileFragment_to_HomePageFragment);
                 }
             }
         });
