@@ -3,17 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/LifestyleApp/lifestyle-app/app/src/main/res/layout/fragment_first.xml" value="0.1796875" />
-        <entry key="..\:/LifestyleApp/lifestyle-app/app/src/main/res/layout/profile_fragment.xml" value="0.1796875" />
         <entry key="..\:/Users/dtdet/Desktop/lifestyle-app/app/src/main/res/layout/activity_main.xml" value="0.19701086956521738" />
         <entry key="..\:/Users/dtdet/Desktop/lifestyle-app/app/src/main/res/layout/profile_fragment.xml" value="0.253125" />
         <entry key="..\:/Users/jakew/Documents/lifestyle-app/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/jakew/Documents/lifestyle-app/app/src/main/res/layout/activity_profile.xml" value="0.25" />
         <entry key="..\:/Users/jakew/Documents/lifestyle-app/app/src/main/res/layout/content_main.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/jakew/Documents/lifestyle-app/app/src/main/res/layout/fragment_first.xml" value="0.25" />
+        <entry key="..\:/Users/jakew/Documents/lifestyle-app/app/src/main/res/layout/fragment_first.xml" value="0.1" />
         <entry key="..\:/Users/jakew/Documents/lifestyle-app/app/src/main/res/layout/fragment_second.xml" value="0.2046875" />
         <entry key="..\:/Users/jakew/Documents/lifestyle-app/app/src/main/res/layout/profile_fragment.xml" value="0.33" />
         <entry key="..\:/Users/jakew/Documents/lifestyle-app/app/src/main/res/menu/menu_main.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/justi/OneDrive/Documents/LifeStyleApp/lifestyle-app/app/src/main/res/drawable/home_icon.xml" value="0.19444444444444445" />
+        <entry key="..\:/Users/justi/OneDrive/Documents/LifeStyleApp/lifestyle-app/app/src/main/res/drawable/profile_icon.xml" value="0.19444444444444445" />
+        <entry key="..\:/Users/justi/OneDrive/Documents/LifeStyleApp/lifestyle-app/app/src/main/res/drawable/settings_icon.xml" value="0.19444444444444445" />
+        <entry key="..\:/Users/justi/OneDrive/Documents/LifeStyleApp/lifestyle-app/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/justi/OneDrive/Documents/LifeStyleApp/lifestyle-app/app/src/main/res/layout/content_main.xml" value="0.25" />
+        <entry key="..\:/Users/justi/OneDrive/Documents/LifeStyleApp/lifestyle-app/app/src/main/res/layout/fragment_first.xml" value="0.1" />
+        <entry key="..\:/Users/justi/OneDrive/Documents/LifeStyleApp/lifestyle-app/app/src/main/res/layout/fragment_home_page.xml" value="0.25" />
+        <entry key="..\:/Users/justi/OneDrive/Documents/LifeStyleApp/lifestyle-app/app/src/main/res/layout/fragment_second.xml" value="0.264" />
+        <entry key="..\:/Users/justi/OneDrive/Documents/LifeStyleApp/lifestyle-app/app/src/main/res/layout/profile_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/justi/OneDrive/Documents/LifeStyleApp/lifestyle-app/app/src/main/res/menu/bottom_selection_bar_nav.xml" value="0.25" />
       </map>
     </option>
   </component>

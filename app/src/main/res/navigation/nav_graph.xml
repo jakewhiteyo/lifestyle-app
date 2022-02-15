@@ -26,6 +26,10 @@
         <action
             android:id="@+id/action_ProfileFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
+        <action
+        android:id="@+id/action_ProfileFragment_to_HomePageFragment"
+        app:destination="@id/HomePageFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -36,5 +40,15 @@
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_SecondFragment_to_HomePageFragment"
+            app:destination="@id/HomePageFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/HomePageFragment"
+        android:name="com.example.lifestyle_app.HomePageFragment"
+        tools:layout="@layout/fragment_home_page">
+    </fragment>
+
 </navigation>
