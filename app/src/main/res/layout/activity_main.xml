@@ -25,13 +25,6 @@
 
 
 
-        <ImageView
-            android:id="@+id/profile_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
 
