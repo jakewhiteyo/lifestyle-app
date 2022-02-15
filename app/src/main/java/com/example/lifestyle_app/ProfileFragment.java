@@ -37,12 +37,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class ProfileFragment extends Fragment {
 
     private ProfileFragmentBinding binding;
 
     private String first_name;
+    private String last_name;
+    private String gender;
+    private String height_feet;
+    private String height_inches;
+    private String weight;
+    private String location;
 
     private Button submit_button;
 
@@ -57,6 +64,12 @@ public class ProfileFragment extends Fragment {
 
 
     private EditText first_name_text;
+    private EditText last_name_text;
+    private Spinner gender_spinner;
+    private Spinner height_feet_spinner;
+    private Spinner height_inches_spinner;
+    private Spinner weight_spinner;
+    private EditText location_text;
 
     public ProfileFragment() {
     }
@@ -84,6 +97,12 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         first_name_text = (EditText) view.findViewById(R.id.first_name);
+        last_name_text = (EditText) view.findViewById(R.id.last_name);
+        gender_spinner = (Spinner) view.findViewById(R.id.gender_select);
+        height_feet_spinner = (Spinner) view.findViewById(R.id.height_feet);
+        height_inches_spinner = (Spinner) view.findViewById(R.id.height_inches);
+        weight_spinner = (Spinner) view.findViewById(R.id.weight_select);
+        location_text = (EditText) view.findViewById(R.id.location);
 
         //set up sex spinner
         List<String> sexes = new ArrayList<>();
@@ -96,19 +115,57 @@ public class ProfileFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sexSelector.setAdapter(adapter);
 
-//        if(!(first_name.matches(""))) {
-//            first_name_text.setText(first_name);
-//        }
+        //set up sex spinner
+        List<String> height_feet_options = new ArrayList<>();
+        height_feet_options.add(0, "feet");
+        height_feet_options.add("4");
+        height_feet_options.add("5");
+        height_feet_options.add("6");
+        height_feet_options.add("7");
+        Spinner height_feet_selector = (Spinner) getView().findViewById(R.id.height_feet);
+        ArrayAdapter<String> height_feet_adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, height_feet_options);
+        height_feet_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        height_feet_selector.setAdapter(height_feet_adapter);
+
+        File nameFile = new File(getActivity().getFilesDir(), "ProfileName");
+
+        if(nameFile.exists()) {
+            try {
+                Scanner scanner = new Scanner(nameFile);
+                String[] variables =  {first_name, last_name, gender, height_feet, height_inches, weight, location};
+                String[] values =  {"first_name", "last_name", "gender", "height_feet", "height_inches", "weight", "location"};
+                int i = 0;
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    String[] words = line.split(" ");
+                    variables[i] = words[1];
+                    i++;
+                }
+            } catch (Exception e) {
+
+            }
+        }
+        if(first_name != "") {
+            first_name_text.setText(first_name);
+        }
 
         submit_button = (Button) getView().findViewById(R.id.submit_button);
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 first_name = first_name_text.getText().toString();
+                last_name = last_name_text.getText().toString();
+                gender = gender_spinner.getSelectedItem().toString();
+//                height_feet = height_feet_spinner.getSelectedItem().toString();
+//                height_inches = height_inches_spinner.getSelectedItem().toString();
+//                height_inches = height_inches_spinner.getSelectedItem().toString();
+//                weight = weight_spinner.getSelectedItem().toString();
+//                location = location_text.getText().toString();
+
                 if (first_name.matches("")) {
                     Toast.makeText(getActivity(), "Enter a name first!", Toast.LENGTH_SHORT).show();
                 } else {
-                    saveFile(first_name);
+                    saveFile(first_name, last_name, gender, height_feet, height_inches, weight, location);
                     NavHostFragment.findNavController(ProfileFragment.this)
                             .navigate(R.id.action_ProfileFragment_to_HomePageFragment);
                 }
@@ -119,7 +176,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
                 Object gender = adapterView.getItemAtPosition(pos);
-                Toast.makeText(getActivity(), gender.toString() + " was selected!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), gender.toString() + " was selected!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -199,13 +256,21 @@ public class ProfileFragment extends Fragment {
         return false;
     }
 
-    private void saveFile(String first_name) {
+    private void saveFile(String first_name, String last_name, String gender, String height_feet, String height_inches, String weight, String location) {
         File directory = getActivity().getFilesDir();
         try {
             File file = new File(directory, "ProfileName");
             //Toast.makeText(getActivity(), "doesn't exist", Toast.LENGTH_SHORT).show();
             FileOutputStream writer = new FileOutputStream(file);
-            writer.write(first_name.getBytes());
+            String fileString = "first_name " + first_name + "\n";
+            fileString += "last_name " + last_name + "\n";
+            fileString += "gender " + gender + "\n";
+            fileString += "height_feet " + height_feet + "\n";
+            fileString += "height_inches " + height_inches + "\n";
+            fileString += "weight " + weight + "\n";
+            fileString += "location " + location + "\n";
+
+            writer.write(fileString.getBytes());
             writer.close();
 
         } catch (Exception e) {

@@ -9,19 +9,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_height="705dp"
+        android:layout_marginTop="0dp"
         android:padding="10dp">
 
         <TextView
             android:id="@+id/first_name_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="20dp"
             android:text="First Name:"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/first_name_view2" />
 
         <EditText
             android:id="@+id/first_name"
@@ -34,46 +36,46 @@
             app:layout_constraintTop_toBottomOf="@+id/first_name_view" />
 
         <Spinner
-            android:id="@+id/height_select"
-            android:layout_width="190dp"
-            android:layout_height="40dp"
+            android:id="@+id/weight_select"
+            android:layout_width="187dp"
+            android:layout_height="38dp"
 
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown"
-            app:layout_constraintStart_toEndOf="@+id/weight_select"
+            app:layout_constraintStart_toEndOf="@+id/height_inches"
             app:layout_constraintTop_toBottomOf="@+id/weight_view" />
 
         <TextView
             android:id="@+id/location_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/weight_select"
+            android:layout_below="@+id/height_feet"
             android:text="Location:"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/height_view"
-            app:layout_constraintTop_toBottomOf="@+id/weight_select" />
+            app:layout_constraintTop_toBottomOf="@+id/height_feet" />
 
         <TextView
             android:id="@+id/profile_pic_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/weight_select"
+            android:layout_below="@+id/height_feet"
             android:text="Profile Picture"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/location_view"
-            app:layout_constraintTop_toBottomOf="@+id/location_view" />
+            app:layout_constraintTop_toBottomOf="@+id/location" />
 
         <TextView
             android:id="@+id/weight_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/height_select"
+            android:layout_below="@+id/weight_select"
             android:text="Weight:"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/weight_select"
+            app:layout_constraintStart_toEndOf="@+id/height_inches"
             app:layout_constraintTop_toBottomOf="@+id/gender_select" />
 
         <TextView
@@ -87,12 +89,21 @@
             app:layout_constraintTop_toBottomOf="@+id/gender_select" />
 
         <Spinner
-            android:id="@+id/weight_select"
-            android:layout_width="208dp"
-            android:layout_height="41dp"
+            android:id="@+id/height_feet"
+            android:layout_width="81dp"
+            android:layout_height="36dp"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown"
             app:layout_constraintStart_toStartOf="@+id/height_view"
+            app:layout_constraintTop_toBottomOf="@+id/height_view" />
+
+        <Spinner
+            android:id="@+id/height_inches"
+            android:layout_width="70dp"
+            android:layout_height="37dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toEndOf="@+id/height_feet"
             app:layout_constraintTop_toBottomOf="@+id/height_view" />
 
         <Spinner
@@ -125,6 +136,17 @@
             app:layout_constraintStart_toStartOf="@+id/last_name_view"
             app:layout_constraintTop_toBottomOf="@+id/last_name_view" />
 
+        <EditText
+            android:id="@+id/location"
+            android:layout_width="395dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="4dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=""
+            app:layout_constraintStart_toStartOf="@+id/location_view"
+            app:layout_constraintTop_toBottomOf="@+id/location_view" />
+
         <TextView
             android:id="@+id/last_name_view"
             android:layout_width="wrap_content"
@@ -140,15 +162,17 @@
             android:id="@+id/submit_button"
             android:layout_width="112dp"
             android:layout_height="50dp"
+            android:layout_marginBottom="140dp"
             android:text="submit"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="5dp" />
+            tools:layout_editor_absoluteX="15dp" />
 
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="118dp"
             android:layout_height="49dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="140dp"
             android:text="cancel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/submit_button" />
@@ -169,6 +193,16 @@
             android:layout_marginStart="36dp"
             app:layout_constraintStart_toEndOf="@+id/take_picture"
             app:layout_constraintTop_toTopOf="@+id/profile_pic_view" />
+
+        <TextView
+            android:id="@+id/first_name_view2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile Page"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/first_name_view"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,8 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/FirstFragment">
 
+
+
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.lifestyle_app.FirstFragment"
