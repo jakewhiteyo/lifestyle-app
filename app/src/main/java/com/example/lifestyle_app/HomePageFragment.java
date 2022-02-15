@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifestyle_app.databinding.ActivityMainBinding;
@@ -37,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 
 import com.example.lifestyle_app.databinding.ProfileFragmentBinding;
@@ -44,6 +47,9 @@ import com.example.lifestyle_app.databinding.ProfileFragmentBinding;
 public class HomePageFragment extends Fragment {
 
     private FragmentHomePageBinding binding;
+
+    private TextView profileText;
+    private ImageView imageView;
 
     public HomePageFragment(){
 
@@ -67,6 +73,39 @@ public class HomePageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        profileText = (TextView) view.findViewById(R.id.profile_text);
+
+        //fetch first name data
+        File nameFile = new File(getActivity().getFilesDir(), "ProfileName");
+        String name = "first name: ";
+        if(nameFile.exists()) {
+            try {
+                Scanner scanner = new Scanner(nameFile);
+                while(scanner.hasNextLine()) {
+                    name += scanner.nextLine();
+                }
+            } catch (Exception e) {
+
+            }
+
+
+            profileText.setText(name);
+            //first_name_text.setText(first_name);
+        }
+
+        //fetch thumbnail image
+        imageView = (ImageView) view.findViewById(R.id.profile_image);
+        File imageFile = new File(getActivity().getFilesDir(), "ProfileImage.png");
+
+        if(imageFile.exists()) {
+            try {
+                imageView.setImageDrawable(Drawable.createFromPath(imageFile.toString()));
+
+            } catch (Exception e) {
+
+            }
+        }
     }
 
 
