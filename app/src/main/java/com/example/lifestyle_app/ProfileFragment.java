@@ -127,26 +127,13 @@ public class ProfileFragment extends Fragment {
         height_feet_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         height_feet_selector.setAdapter(height_feet_adapter);
 
-        File nameFile = new File(getActivity().getFilesDir(), "ProfileName");
+        readFile();
 
-        if(nameFile.exists()) {
-            try {
-                Scanner scanner = new Scanner(nameFile);
-                String[] variables =  {first_name, last_name, gender, height_feet, height_inches, weight, location};
-                String[] values =  {"first_name", "last_name", "gender", "height_feet", "height_inches", "weight", "location"};
-                int i = 0;
-                while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    String[] words = line.split(" ");
-                    variables[i] = words[1];
-                    i++;
-                }
-            } catch (Exception e) {
-
-            }
-        }
         if(first_name != "") {
             first_name_text.setText(first_name);
+        }
+        if(last_name != "") {
+            last_name_text.setText(last_name);
         }
 
         submit_button = (Button) getView().findViewById(R.id.submit_button);
@@ -163,8 +150,12 @@ public class ProfileFragment extends Fragment {
 //                location = location_text.getText().toString();
 
                 if (first_name.matches("")) {
-                    Toast.makeText(getActivity(), "Enter a name first!", Toast.LENGTH_SHORT).show();
-                } else {
+                    Toast.makeText(getActivity(), "Enter a first name first!", Toast.LENGTH_SHORT).show();
+                }
+                else if(last_name.matches("")) {
+                    Toast.makeText(getActivity(), "Enter a last name first!", Toast.LENGTH_SHORT).show();
+                }
+                else {
                     saveFile(first_name, last_name, gender, height_feet, height_inches, weight, location);
                     NavHostFragment.findNavController(ProfileFragment.this)
                             .navigate(R.id.action_ProfileFragment_to_HomePageFragment);
@@ -172,7 +163,8 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        binding.genderSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // KB idk if we need this. LMK tho
+        /*binding.genderSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
                 Object gender = adapterView.getItemAtPosition(pos);
@@ -183,7 +175,7 @@ public class ProfileFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
-        });
+        });*/
 
         binding.cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,6 +267,39 @@ public class ProfileFragment extends Fragment {
 
         } catch (Exception e) {
 
+        }
+    }
+
+    private void readFile() {
+        File nameFile = new File(getActivity().getFilesDir(), "ProfileName");
+
+        if(nameFile.exists()) {
+            try {
+                Scanner scanner = new Scanner(nameFile);
+                int i = 0;
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    String[] words = line.split(" ");
+                    if(words[0].equals("first_name"))
+                        first_name = words[1];
+                    else if(words[0].equals("last_name"))
+                        last_name = words[1];
+                    else if(words[0].equals("gender"))
+                        gender = words[1];
+                    else if(words[0].equals("height_feet"))
+                        height_feet = words[1];
+                    else if(words[0].equals("height_inches"))
+                        height_inches = words[1];
+                    else if(words[0].equals("weight"))
+                        weight = words[1];
+                    else if(words[0].equals("location"))
+                        location = words[1];
+
+                    i++;
+                }
+            } catch (Exception e) {
+
+            }
         }
     }
 
