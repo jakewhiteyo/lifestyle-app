@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -50,10 +51,12 @@ public class HomePageFragment extends Fragment {
 
     private TextView profileText;
     private ImageView imageView;
+    private Button mapsHikeButton;
 
-    public HomePageFragment(){
+    public HomePageFragment() {
 
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,11 +77,29 @@ public class HomePageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Open Google Maps for nearby hikes
+        binding.hikeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri hikeSearch = Uri.parse("geo:40.753977,-111.88172?q=Hikes");
+
+                //Create implicit intent
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, hikeSearch);
+
+                // if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(mapIntent);
+                //    Toast.makeText(getActivity(), "Hike button working!", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(getActivity(), "Its null!", Toast.LENGTH_SHORT).show();
+//                }
+            }
+        });
+
         //fetch thumbnail image
         imageView = (ImageView) view.findViewById(R.id.profile_image);
         File imageFile = new File(getActivity().getFilesDir(), "ProfileImage.png");
 
-        if(imageFile.exists()) {
+        if (imageFile.exists()) {
             try {
                 imageView.setImageDrawable(Drawable.createFromPath(imageFile.toString()));
 
